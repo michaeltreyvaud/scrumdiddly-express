@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
+const authRoute = require('./routes/auth');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', index);
+app.use('/auth', authRoute);
 
 // catch 404 and forward to error handler
 const handle404 = function handle404(req, res) {
