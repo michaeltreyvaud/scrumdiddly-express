@@ -7,6 +7,8 @@ const api = {
     const { body } = req;
     const jsonValidation = new Validator();
     if (!jsonValidation.validate(body, ObjectSchemas.login).valid) return res.sendStatus(400);
+    const { userName, password } = body;
+    return Cognito.adminInitiateAuth(userName, password)
       .then(userData => res.status(200).json(userData))
       .catch(err => res.status(err.code).json({
         code: err.code,
