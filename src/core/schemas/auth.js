@@ -2,14 +2,14 @@ const api = {
   login: {
     type: 'object',
     properties: {
-      email: {
+      userName: {
         type: 'string',
       },
       password: {
         type: 'string',
       },
     },
-    required: ['email', 'password'],
+    required: ['userName', 'password'],
   },
   signUp: {
     type: 'object',

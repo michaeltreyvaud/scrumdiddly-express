@@ -94,7 +94,7 @@ const api = () => {
   };
 
   //  Initiates the authentication flow, as admin
-  const adminInitiateAuth = (userName, password) => {
+  const adminInitiateAuth = (userName, password) => new Promise((resolve, reject) => {
     Logger.info(`adminInitiateAuth with userName: ${userName}`);
     const params = {
       AuthFlow: 'ADMIN_NO_SRP_AUTH',
@@ -106,10 +106,11 @@ const api = () => {
       },
     };
     return Cognito.adminInitiateAuth(params, (err, data) => {
-      if (err) Logger.error(err, err.stack);
-      else Logger.info(data);
+      if (err) return reject(errorHandler.parseError('adminInitiateAuth', err));
+      Logger.info(`adminInitiateAuth success with data: ${data}`);
+      return resolve(data);
     });
-  };
+  });
 
   //  Reset a users password as admin
   const adminResetUserPassword = (userName) => {
