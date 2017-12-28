@@ -27,6 +27,18 @@ const api = {
         error: err.message,
       }));
   },
+  confirm: (req, res) => {
+    const { body } = req;
+    const jsonValidation = new Validator();
+    if (!jsonValidation.validate(body, ObjectSchemas.confirm).valid) return res.sendStatus(400);
+    const { userName, confirmationCode } = body;
+    return Cognito.confirmSignUp(userName, confirmationCode)
+      .then(userData => res.status(200).json(userData))
+      .catch(err => res.status(err.code).json({
+        code: err.code,
+        error: err.message,
+      }));
+  },
 };
 
 module.exports = api;

@@ -168,7 +168,7 @@ const api = () => {
   };
 
   //  Confirms a user account
-  const confirmSignUp = (confirmationCode, userName) => {
+  const confirmSignUp = (userName, confirmationCode) => new Promise((resolve, reject) => {
     Logger.info(`confirmSignUp with confirmationCode: ${confirmationCode} and userName: ${userName}`);
     const params = {
       ClientId: process.env.APP_CLIENT_ID,
@@ -176,10 +176,11 @@ const api = () => {
       Username: userName,
     };
     return Cognito.confirmSignUp(params, (err, data) => {
-      if (err) Logger.error(err, err.stack);
-      else Logger.info(data);
+      if (err) return reject(errorHandler.parseError('confirmSignUp', err));
+      Logger.info(`confirmSignUp success with data: ${data}`);
+      return resolve(data);
     });
-  };
+  });
 
   //  Deletes a user from the user pool
   const deleteUser = (accessToken) => {

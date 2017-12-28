@@ -26,6 +26,18 @@ const api = {
     },
     required: ['userName', 'email', 'password'],
   },
+  confirm: {
+    type: 'object',
+    properties: {
+      userName: {
+        type: 'string',
+      },
+      confirmationCode: {
+        type: 'string',
+      },
+    },
+    required: ['userName', 'confirmationCode'],
+  },
 };
 
 module.exports = api;
