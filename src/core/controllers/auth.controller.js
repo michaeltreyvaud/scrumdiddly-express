@@ -23,7 +23,10 @@ const api = {
     const { userName, email, password } = body;
     return Cognito.signUp(userName, email, password)
       .then(userData => res.status(200).json(userData))
-      .catch(err => res.status(err.code).send(err.message));
+      .catch(err => res.status(err.code).json({
+        code: err.code,
+        error: err.message,
+      }));
   },
 };
 

@@ -1,11 +1,141 @@
 const AWS = require('aws-sdk');
 const Logger = require('../../utils/Logger');
 const CognitoErrorHandler = require('../../utils/cognitoErrorHandler');
+const shortid = require('shortid');
 
 const api = () => {
   const Cognito = new AWS.CognitoIdentityServiceProvider();
   const errorHandler = CognitoErrorHandler(Logger);
   Cognito.config.region = process.env.AWS_REGION;
+
+  //  Create a user as admin
+  const adminCreateUser = (userName, email) => {
+    Logger.info(`adminCreateUser with userName: ${userName} and email: ${email}`);
+    const emailData = {
+      Name: 'email',
+      Value: email,
+    };
+    const tempPassword = shortid.generate();
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+      TemporaryPassword: tempPassword,
+      UserAttributes: [emailData],
+    };
+    return Cognito.adminCreateUser(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Confirm a users account as admin
+  const adminConfirmSignUp = (userName) => {
+    Logger.info(`adminConfirmSignUp with userName: ${userName}`);
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+    };
+    return Cognito.adminConfirmSignUp(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Delete a user as admin
+  const adminDeleteUser = (userName) => {
+    Logger.info(`adminDeleteUser with userName: ${userName}`);
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+    };
+    return Cognito.adminDeleteUser(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Disable a user as admin
+  const adminDisableUser = (userName) => {
+    Logger.info(`adminDisableUser with userName: ${userName}`);
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+    };
+    return Cognito.adminDisableUser(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Enable a user as admin
+  const adminEnableUser = (userName) => {
+    Logger.info(`adminEnableUser with userName: ${userName}`);
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+    };
+    return Cognito.adminEnableUser(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Gets a user as admin
+  const adminGetUser = (userName) => {
+    Logger.info(`adminGetUser with userName: ${userName}`);
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+    };
+    return Cognito.adminGetUser(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Initiates the authentication flow, as admin
+  const adminInitiateAuth = (userName, password) => {
+    Logger.info(`adminInitiateAuth with userName: ${userName}`);
+    const params = {
+      AuthFlow: 'ADMIN_NO_SRP_AUTH',
+      ClientId: process.env.APP_CLIENT_ID,
+      UserPoolId: process.env.USER_POOL_ID,
+      AuthParameters: {
+        USERNAME: userName,
+        PASSWORD: password,
+      },
+    };
+    return Cognito.adminInitiateAuth(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Reset a users password as admin
+  const adminResetUserPassword = (userName) => {
+    Logger.info(`adminInitiateAuth with userName: ${userName}`);
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+    };
+    return Cognito.adminResetUserPassword(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
+
+  //  Global signout as admin
+  const adminUserGlobalSignOut = (userName) => {
+    Logger.info(`adminUserGlobalSignOut with userName: ${userName}`);
+    const params = {
+      UserPoolId: process.env.USER_POOL_ID,
+      Username: userName,
+    };
+    return Cognito.adminUserGlobalSignOut(params, (err, data) => {
+      if (err) Logger.error(err, err.stack);
+      else Logger.info(data);
+    });
+  };
 
   //  Update the users password
   const changePassword = (accessToken, oldPassword, newPassword) => {
@@ -133,6 +263,15 @@ const api = () => {
   };
 
   return {
+    adminCreateUser,
+    adminConfirmSignUp,
+    adminDeleteUser,
+    adminDisableUser,
+    adminEnableUser,
+    adminGetUser,
+    adminInitiateAuth,
+    adminResetUserPassword,
+    adminUserGlobalSignOut,
     changePassword,
     confirmForgotPassword,
     confirmSignUp,
