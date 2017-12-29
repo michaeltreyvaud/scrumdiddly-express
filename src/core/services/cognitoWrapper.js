@@ -253,17 +253,18 @@ const api = () => {
   });
 
   //  Resend user confirmation code
-  const resendConfirmationCode = (userName) => {
+  const resendConfirmationCode = userName => new Promise((resolve, reject) => {
     Logger.info(`resendConfirmationCode with userName : ${userName}`);
     const params = {
       ClientId: process.env.APP_CLIENT_ID,
       Username: userName,
     };
     return Cognito.resendConfirmationCode(params, (err, data) => {
-      if (err) Logger.error(err, err.stack);
-      else Logger.info(data);
+      if (err) return reject(errorHandler.parseError('resendConfirmationCode', err));
+      Logger.info(`resendConfirmationCode success with data: ${data}`);
+      return resolve(data);
     });
-  };
+  });
 
   return {
     adminCreateUser,

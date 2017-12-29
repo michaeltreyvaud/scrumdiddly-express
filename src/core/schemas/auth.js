@@ -47,6 +47,15 @@ const api = {
     },
     required: ['userName'],
   },
+  resend: {
+    type: 'object',
+    properties: {
+      userName: {
+        type: 'string',
+      },
+    },
+    required: ['userName'],
+  },
 };
 
 module.exports = api;
