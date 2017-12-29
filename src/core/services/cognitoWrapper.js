@@ -153,7 +153,7 @@ const api = () => {
   };
 
   //  Confirms a new Password
-  const confirmForgotPassword = (confirmationCode, userName, password) => {
+  const confirmForgotPassword = (userName, confirmationCode, password) => new Promise((resolve, reject) => {
     Logger.info(`confirmForgotPassword with confirmationCode: ${confirmationCode} and userName: ${userName}`);
     const params = {
       ClientId: process.env.APP_CLIENT_ID,
@@ -162,10 +162,11 @@ const api = () => {
       Username: userName,
     };
     return Cognito.confirmForgotPassword(params, (err, data) => {
-      if (err) Logger.error(err, err.stack);
-      else Logger.info(data);
+      if (err) return reject(errorHandler.parseError('confirmForgotPassword', err));
+      Logger.info(`confirmForgotPassword success with data: ${data}`);
+      return resolve(data);
     });
-  };
+  });
 
   //  Confirms a user account
   const confirmSignUp = (userName, confirmationCode) => new Promise((resolve, reject) => {

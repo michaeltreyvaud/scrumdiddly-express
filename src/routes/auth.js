@@ -8,5 +8,6 @@ router.post('/signup', AuthController.signUp);
 router.post('/confirm', AuthController.confirm);
 router.post('/forgot', AuthController.forgot);
 router.post('/resend', AuthController.resend);
+router.post('/confirmForgotPassword', AuthController.confirmForgotPassword);
 
 module.exports = router;
