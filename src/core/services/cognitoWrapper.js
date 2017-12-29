@@ -195,17 +195,18 @@ const api = () => {
   };
 
   //  Send code to reset Password
-  const forgotPassword = (userName) => {
+  const forgotPassword = userName => new Promise((resolve, reject) => {
     Logger.info(`forgotPassword with userName: ${userName}`);
     const params = {
       ClientId: process.env.APP_CLIENT_ID,
       Username: userName,
     };
     return Cognito.forgotPassword(params, (err, data) => {
-      if (err) Logger.error(err, err.stack);
-      else Logger.info(data);
+      if (err) return reject(errorHandler.parseError('forgotPassword', err));
+      Logger.info(`forgotPassword success with data: ${data}`);
+      return resolve(data);
     });
-  };
+  });
 
   //  Get user info
   const getUser = (accessToken) => {

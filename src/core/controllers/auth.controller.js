@@ -39,6 +39,18 @@ const api = {
         error: err.message,
       }));
   },
+  forgot: (req, res) => {
+    const { body } = req;
+    const jsonValidation = new Validator();
+    if (!jsonValidation.validate(body, ObjectSchemas.forgot).valid) return res.sendStatus(400);
+    const { userName } = body;
+    return Cognito.forgotPassword(userName)
+      .then(userData => res.status(200).json(userData))
+      .catch(err => res.status(err.code).json({
+        code: err.code,
+        error: err.message,
+      }));
+  },
 };
 
 module.exports = api;

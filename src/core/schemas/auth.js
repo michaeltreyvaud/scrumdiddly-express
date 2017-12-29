@@ -38,6 +38,15 @@ const api = {
     },
     required: ['userName', 'confirmationCode'],
   },
+  forgot: {
+    type: 'object',
+    properties: {
+      userName: {
+        type: 'string',
+      },
+    },
+    required: ['userName'],
+  },
 };
 
 module.exports = api;
