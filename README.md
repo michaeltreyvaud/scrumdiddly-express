@@ -1,4 +1,4 @@
-![Build Status](https://codebuild.us-east-1.amazon.com/badges?uuid=...&branch=master)
+![Build Status](https://codebuild.eu-west-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiV1Jyc0FIZkdBVHNmTllMZWhzUERBM2dzZ053TVFVbTR5TlZjT3VTcUM1czlkNkpLUUZIUTVpS0JRZHZ5MzFpcitPb2lnR2JTS0F0M1ZZbjNSVEpQSmVNPSIsIml2UGFyYW1ldGVyU3BlYyI6IjE4LzFvejlERnhCNjArVDkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=develop)
 
 # scrumdiddly-express
 Scrumdiddly express backend
