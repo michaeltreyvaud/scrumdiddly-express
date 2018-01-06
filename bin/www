@@ -2,7 +2,7 @@
 
 //  Module dependencies.
 require('dotenv').config();
-const Logger = require('../src/Utils/Logger');
+const Logger = require('../src/utils/Logger');
 const app = require('../src/app');
 const http = require('http');
 
