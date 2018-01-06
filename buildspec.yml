@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing Dependencies...
+      - npm install
+  pre_build:
+    commands:
+      - echo Running Linting...
+      - npm run lint
+  build:
+    commands:
+      - echo Nothing yet to build
+  post_build:
+    commands:
+      - echo Build completed on `date`
